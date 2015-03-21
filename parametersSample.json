@@ -1,0 +1,20 @@
+{
+	"$schema": "http://schemas.management.azure.com/deploymentTemplate?api-version=2014-04-01-preview",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"myParameter": {
+			"type" : "string",
+			"defaultValue": "option 1",
+			"allowedValues": [ "option 1", "option 2", "option 3" ],
+			"metadata" : { "key": { "name": "value"} }	
+		}
+	},
+	"variables": {},
+	"resources": [],
+	"outputs": {
+		"exampleOutput": {
+			"value": "[parameters('myParameter')]",
+			"type" : "string"
+		}
+	}
+}

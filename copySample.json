@@ -1,0 +1,33 @@
+    {
+      "$schema": "http://schemas.management.azure.com/deploymentTemplate?api-version=2014-04-01-preview",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "users": {
+          "type": "array",
+          "defaultValue": [
+            "Tasha",
+            "Hollis",
+            "tbd"
+          ]
+        },
+        "count": {
+          "type": "int",
+          "defaultValue": 3
+        }
+      },
+      "variables": {},
+      "resources": [
+        {
+          "name": "[concat('ryjonescopy-', parameters('users')[copyIndex()])]",
+          "type": "Microsoft.Web/sites",
+          "location": "East US",
+          "apiVersion": "2014-06-01",
+          "copy": {
+            "name": "websitescopya",
+            "count": "[parameters('count')]"
+          },
+          "properties": {}
+        }
+      ],
+      "outputs": {}
+    }

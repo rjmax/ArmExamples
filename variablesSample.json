@@ -1,0 +1,33 @@
+{
+	"$schema": "http://schemas.management.azure.com/deploymentTemplate?api-version=2014-04-01-preview",
+	"contentVersion": "1.0.0.0",
+	"parameters": {},
+	"variables": {
+		"var1": "myVariable",
+		"var2": [ 1,2,3,4 ],
+		"var3": "[ variables('var1') ]",
+		"var4": {
+			"property1": "value1",
+			"property2": "value2"
+  		}
+	},
+	"resources": [],
+	"outputs": {
+		"exampleOutput1": {
+			"value": "[variables('var1')]",
+			"type" : "string"
+		},
+		"exampleOutput2": {
+			"value": "[variables('var2')]",
+			"type" : "array"
+		},
+		"exampleOutput3": {
+			"value": "[variables('var3')]",
+			"type" : "string"
+		},
+		"exampleOutput4": {
+			"value": "[variables('var4')]",
+			"type" : "object"
+		}
+	}
+}

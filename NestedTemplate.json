@@ -1,0 +1,21 @@
+{
+  "properties": {
+    "mode": "incremental",
+    "template": {
+      "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {},
+      "resources": [
+        {
+          "apiVersion": "2015-01-01",
+          "name": "yangltest2015deployment",
+          "type": "Microsoft.Resources/deployments",
+          "properties": {
+            "mode": "incremental",
+            "templateLink": "<UriToTemplate>"
+          }
+        }
+      ]
+    }
+  }
+}

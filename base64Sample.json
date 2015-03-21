@@ -1,0 +1,13 @@
+{
+	"$schema": "http://schemas.management.azure.com/deploymentTemplate?api-version=2014-04-01-preview",
+	"contentVersion": "1.0.0.0",
+	"parameters": {},
+	"variables": {},
+	"resources": [],
+	"outputs": {
+		"exampleOutput": {
+			"value": "[base64('stringToEncode')]",
+			"type" : "string"
+		}
+	}
+}
