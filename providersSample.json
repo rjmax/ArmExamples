@@ -6,7 +6,7 @@
 	"resources": [],
 	"outputs": {
 		"exampleOutput": {
-			"value": "[providers('Microsoft.ClassicStorage', 'storageAccounts')]",
+			"value": "[providers('Microsoft.Storage', 'storageAccounts')]",
 			"type" : "object"
 		}
 	}

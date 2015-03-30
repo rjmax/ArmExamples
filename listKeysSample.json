@@ -10,7 +10,7 @@
 	"resources": [],
 	"outputs": {
 		"exampleOutput": {
-			"value": "[listKeys(resourceId('Microsoft.ClassicStorage/storageAccounts', parameters('storageAccountName')), providers('Microsoft.ClassicStorage', 'storageAccounts').apiVersions[0])]",
+			"value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0])]",
 			"type" : "object"
 		}
 	}

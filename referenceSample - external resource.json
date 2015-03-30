@@ -10,8 +10,8 @@
 	"resources": [],
 	"outputs": {
 		"exampleOutput": {
-			"value": "[reference(concat('Microsoft.ClassicStorage/storageAccounts/', parameters('storageAccountName')),providers('Microsoft.ClassicStorage', 'storageAccounts').apiVersions[0]).endpoints[0]]",
-			"type" : "string"
+			"value": "[reference(concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName')),providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).primaryEndpoints]",
+			"type" : "object"
 		}
 	}
 }
