@@ -1,13 +1,13 @@
 {
-	"$schema": "http://schemas.management.azure.com/deploymentTemplate?api-version=2014-04-01-preview",
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
 	"contentVersion": "1.0.0.0",
 	"parameters": {},
 	"variables": {},
 	"resources": [],
 	"outputs": {
 		"exampleOutput": {
-			"value": "[providers('Microsoft.ClassicStorage', 'storageAccounts').apiVersions[0]]",
-			"type" : "string"
+			"value": "[providers('Microsoft.ClassicStorage', 'storageAccounts')]",
+			"type" : "object"
 		}
 	}
 }
