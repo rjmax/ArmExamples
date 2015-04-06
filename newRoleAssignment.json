@@ -1,0 +1,27 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "roleDefinitionId": {
+      "type": "string"
+    },
+    "principalId": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Authorization/roleAssignments",
+      "name": "[parameters('principalId')]",
+      "apiVersion": "2014-10-01-preview",
+      "properties": {
+	"roleDefinitionId": "[parameters('roleDefinitionId')]",
+	"principalId": "[parameters('principalId')]",
+	"scope": "[parameters('scope')]"
+      }
+    }
+  ]
+}
