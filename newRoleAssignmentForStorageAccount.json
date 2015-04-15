@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "roleDefinitionId": {
+      "type": "string"
+    },
+    "principalId": {
+      "type": "string"
+    },
+    "rbacResource": {
+      "type": "string"
+    }
+  },
+  "resources": [
+    {
+      "name": "[concat(parameters('rbacResource'), '/Microsoft.Authorization/', parameters('principalId'))]",
+      "type": "Microsoft.Storage/storageAccounts/providers/roleAssignments",
+      "apiVersion": "2014-10-01-preview",
+      "properties": {
+	         "roleDefinitionId": "[parameters('roleDefinitionId')]",
+	         "principalId": "[parameters('principalId')]",
+      }
+    }
+  ]
+}
