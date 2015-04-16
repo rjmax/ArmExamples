@@ -1,21 +1,24 @@
 {
-  "properties": {
-    "mode": "incremental",
-    "template": {
       "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
       "contentVersion": "1.0.0.0",
-      "parameters": {},
+      "parameters": {
+    	"newStorageAccountName": {
+      	"type": "String"
+    	}
+      },
+      "variables": {"templatelink":"https://raw.githubusercontent.com/rjmax/ArmExamples/master/newStorageAccount.json"},
       "resources": [
         {
           "apiVersion": "2015-01-01",
-          "name": "yangltest2015deployment",
+          "name": "nestedTemplate",
           "type": "Microsoft.Resources/deployments",
           "properties": {
             "mode": "incremental",
-            "templateLink": "<UriToTemplate>"
+            "templateLink": {"uri":"[variables('templatelink')]","contentVersion":"1.0.0.0"},
+	    "parameters": {
+		"newStorageAccountName":{"value":"[parameters('newStorageAccountName')]"}
+	    }
           }
         }
       ]
     }
-  }
-}
