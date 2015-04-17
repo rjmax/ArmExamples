@@ -1,0 +1,34 @@
+{
+      "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+    	"storageAccountName": {
+      		"type": "String"
+    	},
+	"newOrExisting":{
+		"type": "String",
+		"allowedValues": [ "new", "existing" ],
+	}
+      },
+      "variables": {"templatelink":"[concat('https://raw.githubusercontent.com/rjmax/ArmExamples/master/',parameters('newOrExisting'),'newStorageAccount.json']"},
+      "resources": [
+        {
+          "apiVersion": "2015-01-01",
+          "name": "nestedTemplate",
+          "type": "Microsoft.Resources/deployments",
+          "properties": {
+            "mode": "incremental",
+            "templateLink": {"uri":"[variables('templatelink')]","contentVersion":"1.0.0.0"},
+	    "parameters": {
+		"newStorageAccountName":{"value":"[parameters('storageAccountName')]"}
+	    }
+          }
+        }
+      ],
+      	"outputs": {
+		"exampleOutput": {
+			"value": "[reference('nestedTemplate')]",
+			"type" : "object"
+		}
+    }
+}
