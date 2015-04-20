@@ -2,7 +2,7 @@
       "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
       "contentVersion": "1.0.0.0",
       "parameters": {
-    	"newStorageAccountName": {
+    	"StorageAccountName": {
       	"type": "String"
     	}
       },
@@ -16,7 +16,7 @@
             "mode": "incremental",
             "templateLink": {"uri":"[variables('templatelink')]","contentVersion":"1.0.0.0"},
 	    "parameters": {
-		"newStorageAccountName":{"value":"[parameters('newStorageAccountName')]"}
+		"StorageAccountName":{"value":"[parameters('StorageAccountName')]"}
 	    }
           }
         }

@@ -20,7 +20,7 @@
             "mode": "incremental",
             "templateLink": {"uri":"[variables('templatelink')]","contentVersion":"1.0.0.0"},
 	    "parameters": {
-		"newStorageAccountName":{"value":"[parameters('storageAccountName')]"}
+		"StorageAccountName":{"value":"[parameters('storageAccountName')]"}
 	    }
           }
         }
