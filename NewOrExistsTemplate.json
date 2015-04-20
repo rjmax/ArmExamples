@@ -10,7 +10,7 @@
 		"allowedValues": [ "new", "existing" ],
 	}
       },
-      "variables": {"templatelink":"[concat('https://raw.githubusercontent.com/rjmax/ArmExamples/master/',parameters('newOrExisting'),'newStorageAccount.json']"},
+      "variables": {"templatelink":"[concat('https://raw.githubusercontent.com/rjmax/ArmExamples/master/',parameters('newOrExisting'),'StorageAccount.json')]"},
       "resources": [
         {
           "apiVersion": "2015-01-01",
