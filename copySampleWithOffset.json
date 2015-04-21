@@ -1,0 +1,25 @@
+    {
+      "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "count": {
+          "type": "int",
+          "defaultValue": 3
+        }
+      },
+      "variables": {},
+      "resources": [
+        {
+          "name": "[concat('ryjonescopy-', copyIndex(1))]",
+          "type": "Microsoft.Web/sites",
+          "location": "East US",
+          "apiVersion": "2014-06-01",
+          "copy": {
+            "name": "websitescopya",
+            "count": "[parameters('count')]"
+          },
+          "properties": {}
+        }
+      ],
+      "outputs": {}
+    }
