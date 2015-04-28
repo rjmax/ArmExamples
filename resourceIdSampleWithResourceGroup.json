@@ -7,7 +7,7 @@
 		},
 		"otherResourceGroupName":{
 			"type": "String"
-		},
+		}
 	},
 	"variables": {},
 	"resources": [],
