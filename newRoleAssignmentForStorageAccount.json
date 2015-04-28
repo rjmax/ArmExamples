@@ -19,7 +19,7 @@
       "apiVersion": "2014-10-01-preview",
       "properties": {
 	         "roleDefinitionId": "[parameters('roleDefinitionId')]",
-	         "principalId": "[parameters('principalId')]",
+	         "principalId": "[parameters('principalId')]"
       }
     }
   ]
