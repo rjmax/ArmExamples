@@ -1,0 +1,28 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"myParameter": {
+			"type" : "string",
+			"defaultValue": "option 1",
+			"allowedValues": [ "option 1", "option 2", "option 3" ],
+			"metadata" : { "key": { "name": "value"} }	
+		},
+		"myDerivedParameter": {
+			"type" : "string",
+			"defaultValue": "[concat('derived ',resourceGroup().name)]",
+		}
+	},
+	"variables": {},
+	"resources": [],
+	"outputs": {
+		"exampleOutput": {
+			"value": "[parameters('myParameter')]",
+			"type" : "string"
+		},
+		"exampleOutput2": {
+			"value": "[parameters('myDerivedParameter')]",
+			"type" : "string"
+		}
+	}
+}
