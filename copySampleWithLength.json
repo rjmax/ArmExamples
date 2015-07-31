@@ -1,0 +1,54 @@
+﻿{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "siteNames": {
+            "type": "array"
+        },
+        "hostingPlanName": {
+            "type": "string"
+        },
+        "siteLocation": {
+            "type": "string"
+        },
+        "sku": {
+            "type": "string",
+            "defaultValue": "Free"
+        },
+        "workerSize": {
+            "type": "string",
+            "defaultValue": "0"
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2014-06-01",
+            "name": "[parameters('hostingPlanName')]",
+            "type": "Microsoft.Web/serverfarms",
+            "location": "[parameters('siteLocation')]",
+            "properties": {
+                "name": "[parameters('hostingPlanName')]",
+                "sku": "[parameters('sku')]",
+                "workerSize": "[parameters('workerSize')]",
+                "numberOfWorkers": 1
+            }
+        },
+        {
+            "copy": {
+                "name": "websitescopy",
+                "count": "[length(parameters('siteNames'))]"
+            },
+            "apiVersion": "2014-06-01",
+            "name": "[parameters('siteNames')[copyIndex()]]",
+            "type": "Microsoft.Web/sites",
+            "location": "[parameters('siteLocation')]",
+            "dependsOn": [
+                "[concat('Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]"
+            ],
+            "properties": {
+                "name": "[parameters('siteNames')]",
+                "serverFarm": "[parameters('hostingPlanName')]"
+            }
+        }
+    ]
+}
