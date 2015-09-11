@@ -1,0 +1,29 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": { },
+    "variables": { },
+    "resources": [ ],
+    "outputs": {
+        "addExampleOutput": {
+            "value": "[add(4, 5)]",
+            "type": "int"
+        },
+        "subtractExampleOutput": {
+            "value": "[sub(10,2)]",
+            "type": "int"
+        },
+        "multiplyExampleOutput": {
+            "value": "[mul(1,1)]",
+            "type": "int"
+        },
+        "divideExampleOutput": {
+            "value": "[div(8,8)]",
+            "type": "int"
+        },
+        "moduloExampleOutput": {
+            "value": "[mod(18,10)]",
+            "type": "int"
+        }
+    }
+}
