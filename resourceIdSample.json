@@ -1,17 +1,50 @@
 {
-	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-	"contentVersion": "1.0.0.0",
-	"parameters": {
-		"storageAccountName": {
-			"type": "String"
-		}
-	},
-	"variables": {},
-	"resources": [],
-	"outputs": {
-		"exampleOutput": {
-			"value": "[resourceId('Microsoft.Storage/storageAccount', parameters('storageAccountName'))]",
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "storageAccountName": {
+            "type": "String"
+        }
+    },
+    "variables": { },
+    "resources": [ ],
+    "outputs": {
+        "example1": {
+            "value": "[resourceid('Namespace/Type1', 'name1')]",
+            "type": "string"
+        },
+        "example2": {
+            "value": "[resourceid('Namespace/Type1/Type2', 'name1', 'name2')]",
+            "type": "string"
+        },
+        "example3": {
+            "value": "[resourceid('Namespace/Type1/Type2/Type3', 'name1', 'name2', 'name3')]",
+            "type": "string"
+        },
+        "example4": {
+            "value": "[resourceid('myrg', 'Namespace/Type1', 'name1')]",
+            "type": "string"
+        },
+        "example5": {
+            "value": "[resourceid('myrg', 'Namespace/Type1/Type2', 'name1', 'name2')]",
+            "type": "string"
+        },
+        "example6": {
+            "value": "[resourceid('myrg', 'Namespace/Type1/Type2/Type3', 'name1', 'name2', 'name3')]",
+            "type": "string"
+        },
+        "example7": {
+            "value": "[resourceid('52d762fd-88a8-46b1-b5ea-31d956aed087', 'myrg', 'Namespace/Type1', 'name1')]",
+            "type": "string"
+        },
+        "example8": {
+            "value": "[resourceid('52d762fd-88a8-46b1-b5ea-31d956aed087', 'myrg', 'Namespace/Type1/Type2', 'name1', 'name2')]",
+            "type": "string"
+        },
+        "example9": {
+			"value": "[resourceid('52d762fd-88a8-46b1-b5ea-31d956aed087', 'myrg', 'Namespace/Type1/Type2/Type3', 'name1', 'name2', 'name3')]",
 			"type" : "string"
 		}
-	}
+
+    }
 }
