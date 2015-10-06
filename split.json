@@ -2,12 +2,18 @@
 	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
 	"contentVersion": "1.0.0.0",
 	"parameters": {},
-	"variables": {},
+	"variables": {
+		"exampleString": "[split('The quick brown fox jumps over the lazy dog.',' ')]"
+	},
 	"resources": [],
 	"outputs": {
-		"exampleOutput": {
-			"value": "[split('The quick brown fox jumps over the lazy dog.',' ')]",
-			"type" : "array"
+		"exampleOutputArray": {
+			"value": "[variables('exampleString')]",
+			"type": "array"
+		},
+		"exampleOutputString": {
+			"value": "[variables('exampleString')[4]]",
+			"type" : "string"
 		}
 	}
 }
