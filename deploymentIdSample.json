@@ -6,7 +6,7 @@
 	"resources": [],
 	"outputs": {
 		"exampleOutput": {
-			"value": "[concat(resourcegroup().id, '/providers/Microsoft.Resources/deployments/', deployment().name)]",
+			"value": "[resourceid('Microsoft.Resources/deployments', deployment().name)]",
 			"type" : "string"
 		}
 	}
