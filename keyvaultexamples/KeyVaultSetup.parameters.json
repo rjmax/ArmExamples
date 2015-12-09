@@ -1,0 +1,21 @@
+﻿{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "keyVaultName": {
+            "value": "[KeyVaultName]"
+        },
+        "tenantId": {
+            "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+        },
+        "objectId": {
+            "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+        },
+        "secretName": {
+            "value": "adminPassword"
+        },
+        "enabledForTemplateDeployment": {
+            "value": true
+        }
+    }
+}
