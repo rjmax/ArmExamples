@@ -1,0 +1,37 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters":
+    {
+    }
+    ,
+    "variables":
+    {
+    }
+    ,
+    "resources": [ ],
+    "outputs":
+    {
+        "exampleOutput":
+        {
+            "value":
+            {
+                "example00": "[Uri('http://foo.com/bar/parent.json', 'bar2/child.json')]",
+                "example01": "[Uri('http://foo.com/bar/', 'bar2/child.json')]",
+                "example02": "[Uri('http://foo.com/', 'bar2/child.json')]",
+                "example03": "[Uri('http://foo.com/', 'bar2/child?query=some&value')]",
+                "example04": "[Uri('http://foo.com/bar/parent.json', './bar2/child.json')]",
+                "example05": "[Uri('http://foo.com/bar/', './bar2/child.json')]",
+                "example06": "[Uri('http://foo.com/', './bar2/child.json')]",
+                "example07": "[Uri('http://foo.com/bar/parent.json', '../bar2/child.json')]",
+                "example08": "[Uri('http://foo.com/bar/', '../bar2/child.json')]",
+                "example09": "[Uri('http://foo.com/', '../bar2/child.json')]",
+                "example10": "[Uri('http://foo.com/bar/parent.json', '/bar2/child.json')]",
+                "example11": "[Uri('http://foo.com/bar/', '/bar2/child.json')]",
+                "example12": "[Uri('http://foo.com/', '/bar2/child.json')]"
+            }
+            ,
+            "type": "object"
+        }
+    }
+}
