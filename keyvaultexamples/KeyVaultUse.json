@@ -1,0 +1,68 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "sqlsvrAdminLogin": {
+      "type": "string",
+      "minLength": 4
+    },
+    "sqlsvrAdminLoginPassword": {
+      "type": "securestring"
+    },
+    "startIpAddress": {
+      "type": "string",
+      "defaultValue": "0.0.0.0",
+      "metadata": {
+        "description": "starting IP address for range of firewall rules"
+      }
+    },
+    "endIpAddress": {
+      "type": "string",
+      "defaultValue": "0.0.0.0",
+      "metadata": {
+        "description": "ending IP address for range of firewall rules"
+      }
+    }
+  },
+  "resources": [
+    {
+      "name": "[variables('sqlsvrName')]",
+      "type": "Microsoft.Sql/servers",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2014-04-01-preview",
+      "dependsOn": [ ],
+      "tags": {
+        "displayName": "sqlsvr"
+      },
+      "properties": {
+        "administratorLogin": "[parameters('sqlsvrAdminLogin')]",
+        "administratorLoginPassword": "[parameters('sqlsvrAdminLoginPassword')]"
+      },
+      "resources": [
+        {
+          "name": "AllowIpRange",
+          "type": "firewallrules",
+          "location": "[resourceGroup().location]",
+          "apiVersion": "2014-04-01-preview",
+          "dependsOn": [
+            "[concat('Microsoft.Sql/servers/', variables('sqlsvrName'))]"
+          ],
+          "properties": {
+            "startIpAddress": "[parameters('startIpAddress')]",
+            "endIpAddress": "[parameters('endIpAddress')]"
+          }
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "sqlsvrName": "[concat('sqlsvr', uniqueString(resourceGroup().id))]"
+  },
+  "outputs": {
+    "fqdn": {
+      "type": "string",
+      "value": "[reference(variables('sqlsvrName')).fullyQualifiedDomainName]"
+    }
+  }
+}
+

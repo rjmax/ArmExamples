@@ -1,0 +1,17 @@
+﻿{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "sqlsvrAdminLogin": {
+      "value": ""
+    },
+    "sqlsvrAdminLoginPassword": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/[xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx]/resourceGroups/[resourceGroupName]/providers/Microsoft.KeyVault/vaults/[KeyVaultName]"
+        },
+        "secretName": "adminPassword"
+      }
+    }
+  }
+}
