@@ -16,6 +16,6 @@
         "arrayLength": {
             "value": "[length(parameters('siteNames'))]",
             "type": "int"
-        }
+        } 
 	}
 }
