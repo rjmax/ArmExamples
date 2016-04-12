@@ -103,7 +103,7 @@
           "apiVersion": "2015-06-01",
           "tags": { "displayName": "secret" },
           "properties": {
-            "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('newStorageName')), '2015-06-15').key1]"
+            "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('newStorageName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value]"
           },
           "dependsOn": [
             "[concat('Microsoft.KeyVault/vaults/', parameters('keyVaultName'))]",
@@ -135,7 +135,7 @@
   "outputs": {
     "newStorageKeys": {
       "type": "string",
-      "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('newStorageName')), '2015-06-15').key1]"
+      "value": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('newStorageName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value]"
     }
   }
 }
