@@ -1,0 +1,78 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "ServiceBusNamespaceName": {
+            "type": "string"
+        },
+        "TopicName": {
+            "type": "string"
+        },
+        "SubscriptionName": {
+            "type": "string"
+        }
+        "ServiceBusApiVersion": {
+            "type": "string",
+            "defaultValue": "2015-08-01"
+
+        },
+        "NamespaceAuthRuleName": {
+            "type": "string",
+            "defaultValue": "SenderReciever"
+
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "[parameters('ServiceBusApiVersion')]",
+            "name": "[parameters('ServiceBusNamespaceName')]",
+            "type": "Microsoft.ServiceBus/Namespaces",
+            "location": "[resourceGroup().location]",
+            "kind": "Messaging",
+            "sku": {
+                "name": "Premium",
+                "tier": "Premium"
+            },
+            "resources": [
+                {
+                    "apiVersion": "[parameters('ServiceBusApiVersion')]",
+                    "name": "[parameters('TopicName')]",
+                    "type": "Topics",
+                    "dependsOn": [
+                        "[concat('Microsoft.ServiceBus/namespaces/', parameters('ServiceBusNamespaceName'))]"
+                    ],
+                    "properties": {
+                        "path": "[parameters('TopicName')]",
+                        "maxSizeInMegabytes": 5120
+                    },
+                    "resources": [
+                        {
+                            "apiVersion": "[parameters('ServiceBusApiVersion')]",
+                            "name": "[parameters('SubscriptionName')]",
+                            "type": "Subscriptions",
+                            "dependsOn": [
+                                "[parameters('TopicName')]"
+                            ],
+                            "properties": {
+                                "lockDuration": "00:05:00",
+                                "deadLetteringOnMessageExpiration": true
+                            }
+                        }
+                    ]
+                },
+               
+            ]
+        },
+        {
+            "apiVersion": "[parameters('ServiceBusApiVersion')]",
+            "name": "[concat(parameters('PrmServiceBusNamespaceName'),'/SenderReciever')]",
+            "type": "Microsoft.ServiceBus/namespaces/authorizationRules",
+            "dependsOn": [ "[concat('Microsoft.ServiceBus/namespaces/', parameters('ServiceBusNamespaceName'))]" ],
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "Rights": [ "Send", "Listen" ]
+            }
+        }
+    ]
+  
+}
