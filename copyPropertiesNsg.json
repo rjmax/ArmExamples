@@ -1,0 +1,51 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"allowedPorts": {
+			"type": "array"
+		}
+	},
+	"variables": {
+		"basePorts": [
+			22
+		],
+		"allPorts": "[concat(variables('basePorts'), parameters('allowedPorts'))]"
+	},
+	"resources": [
+		{
+			"type": "Microsoft.Network/networkSecurityGroups",
+			"name": "myNSG",
+			"apiVersion": "2016-03-30",
+			"location": "[resourceGroup().location]",
+			"properties": {
+				"copy": [
+					{
+						"name": "securityRules",
+						"count": "[length(variables('allPorts'))]",
+						"input": {
+							"name": "[concat('enablePort', variables('allPorts')[copyIndex('securityRules')])]",
+							"properties": {
+								"description": "[concat('Enable Port ', variables('allPorts')[copyIndex('securityRules')])]",
+								"protocol": "*",
+								"sourcePortRange": "*",
+								"destinationPortRange": "[variables('allPorts')[copyIndex('securityRules')]]",
+								"sourceAddressPrefix": "Internet",
+								"destinationAddressPrefix": "*",
+								"access": "Allow",
+								"priority": "[add(100, copyIndex('securityRules'))]",
+								"direction": "Inbound"
+							}
+						}
+					}
+				]
+			}
+		}
+	],
+	"outputs": {
+		"exampleOutput": {
+			"value": "[variables('allPorts')]",
+			"type": "array"
+		}
+	}
+}
