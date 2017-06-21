@@ -1,0 +1,25 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"ipAddress":{
+			"type": "string"
+		}
+	},
+	"variables": {
+		"ipAddress32Bit": "[add(add(add(mul(int(split(parameters('ipAddress'),'.')[0]),16777216),mul(int(split(parameters('ipAddress'),'.')[1]),65536)),mul(int(split(parameters('ipAddress'),'.')[2]),256)),int(split(parameters('ipAddress'),'.')[3]))]",
+		"modifiedIp": "[add(variables('ipAddress32Bit'),1)]",
+		"ipAddressOut": "[concat(string(div(variables('modifiedIP'),16777216)), '.', string(div(mod(variables('modifiedIP'),16777216),65536)), '.', string(div(mod(variables('modifiedIP'),65536),256)), '.', string(mod(variables('modifiedIP'),256)))]"
+	},
+	"resources": [],
+	"outputs": {
+		"ipAddress32Bit": {
+			"value": "[variables('ipAddress32Bit')]",
+			"type" : "int"
+		},
+		"ipAddressOut": {
+			"value": "[variables('ipAddressOut')]",
+			"type" : "string"
+		}
+	}
+}
