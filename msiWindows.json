@@ -5,38 +5,20 @@
         "adminUsername": {
             "type": "string",
             "metadata": {
-                "description": "User name for the Virtual Machine."
+                "description": "Admin user name for the virtual machine"
             }
         },
         "adminPassword": {
             "type": "securestring",
             "metadata": {
-                "description": "Password for the Virtual Machine."
-            }
-        },
-        "roleAssignmentId": {
-            "type": "string",
-            "metadata": {
-                "description": "Role Assignemnt ID for the VM identity"
-            }
-        },
-        "ubuntuOSVersion": {
-            "type": "string",
-            "defaultValue": "16.04.0-LTS",
-            "allowedValues": [
-                "12.04.5-LTS",
-                "14.04.5-LTS",
-                "15.10",
-                "16.04.0-LTS"
-            ],
-            "metadata": {
-                "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version."
+                "description": "Admin user password for virtual machine"
             }
         }
     },
     "variables": {
-        "imagePublisher": "Canonical",
-        "imageOffer": "UbuntuServer",
+        "imagePublisher": "MicrosoftWindowsServer",
+        "imageOffer": "WindowsServer",
+        "imageSku": "2012-R2-Datacenter",
         "nicName": "myVMNic",
         "addressPrefix": "10.0.0.0/16",
         "subnetName": "Subnet",
@@ -47,9 +29,7 @@
         "vmSize": "Standard_D2_v2",
         "virtualNetworkName": "MyVNET",
         "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
-        "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
-        "contributorRoleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
-        "scope": "[resourceGroup().id]"
+        "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]"
     },
     "resources": [
         {
@@ -135,7 +115,7 @@
                     "imageReference": {
                         "publisher": "[variables('imagePublisher')]",
                         "offer": "[variables('imageOffer')]",
-                        "sku": "[parameters('ubuntuOSVersion')]",
+                        "sku": "[variables('imageSku')]",
                         "version": "latest"
                     },
                     "osDisk": {
@@ -159,43 +139,69 @@
             }
         },
         {
-            "apiVersion": "2016-07-01",
-            "type": "Microsoft.Authorization/roleAssignments",
-            "name": "[parameters('roleAssignmentId')]",
+            "type": "Microsoft.KeyVault/vaults",
+            "name": "[uniquestring(concat(resourceGroup().id, 'myKeyVault'))]",
+            "apiVersion": "2015-06-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "tenantId": "[reference(concat('Microsoft.Compute/virtualMachines/', variables('vmName')), '2017-03-30', 'Full').identity.tenantId]",
+                "accessPolicies": [
+                    {
+                        "tenantId": "[reference(concat('Microsoft.Compute/virtualMachines/', variables('vmName')), '2017-03-30', 'Full').identity.tenantId]",
+                        "objectId": "[reference(concat('Microsoft.Compute/virtualMachines/', variables('vmName')), '2017-03-30', 'Full').identity.principalId]",
+                        "permissions": {
+                            "keys": [
+                                "all"
+                            ],
+                            "secrets": [
+                                "all"
+                            ]
+                        }
+                    }
+                ],
+                "sku": {
+                    "family": "A",
+                    "name": "Standard"
+                }
+            },
+            "resources": [
+                {
+                    "type": "secrets",
+                    "name": "mySecret",
+                    "apiVersion": "2015-06-01",
+                    "properties": {
+                        "value": "Secrets secrets are no fun, because they might hurt someone."
+                    },
+                    "dependsOn": [
+                        "[concat('Microsoft.KeyVault/vaults/', uniquestring(concat(resourceGroup().id, 'myKeyVault')))]"
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(variables('vmName'),'/ManagedIdentityExtensionForWindows')]",
+            "apiVersion": "2016-03-30",
+            "location": "[resourceGroup().location]",
             "dependsOn": [
                 "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
             ],
             "properties": {
-                "roleDefinitionId": "[variables('contributorRoleDefinitionId')]",
-                "principalId": "[reference(concat('Microsoft.Compute/virtualMachines/', variables('vmName')), '2017-03-30', 'Full').identity.principalId]",
-                "scope": "[variables('scope')]"
-            }
-        },
-        {
-            "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(variables('vmName'),'/ManagedIdentityExtensionForLinux')]",
-            "apiVersion": "2016-03-30",
-            "location": "[resourceGroup().location]",
-            "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]",
-                "[concat('Microsoft.Authorization/roleAssignments/', parameters('roleAssignmentId'))]"
-            ],
-            "properties": {
                 "publisher": "Microsoft.ManagedIdentity",
-                "type": "ManagedIdentityExtensionForLinux",
+                "type": "ManagedIdentityExtensionForWindows",
                 "typeHandlerVersion": "1.0",
                 "autoUpgradeMinorVersion": true,
                 "settings": {
-                    "port": 50343
+                    "port": 50342
                 },
                 "protectedSettings": {}
             }
         }
     ],
     "outputs": {
-        "commandToGetAToken":{
+        "PowerShellCommandToGetKeyVaultToken": {
             "type": "string",
-            "value": "curl --data \"authority=https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47&&resource=https://management.azure.com\" http://localhost:50343/oauth2/token"
+            "value": "(Invoke-RestMethod -Method GET -Uri \"https://lctzthhc34blo.vault.azure.net/secrets/mySecret?api-version=2016-10-01\" -Headers @{ 'Authorization' = \"Bearer $((ConvertFrom-Json -InputObject (Invoke-WebRequest -Uri http://localhost:50342/oauth2/token -Method POST -Body @{authority = \"https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47\"; resource = \"https://vault.azure.net\"} -UseBasicParsing).Content).access_token)\" }).Value"
         }
     }
 }
