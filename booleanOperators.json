@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": { },
+    "variables": { },
+    "resources": [ ],
+    "outputs": {
+        "andExampleOutput": {
+            "value": "[and(bool('true'), bool('false'))]",
+            "type": "bool"
+        },
+        "orExampleOutput": {
+            "value": "[or(bool('true'), bool('false'))]",
+            "type": "bool"
+        },
+        "notExampleOutput": {
+            "value": "[not(bool('true'))]",
+            "type": "bool"
+        }
+    }
+}
