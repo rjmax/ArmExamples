@@ -5,15 +5,15 @@
 	"variables": {},
 	"resources": [],
 	"outputs": {
-        "uniqueStringPerSubscription": {
+        "guidPerSubscription": {
             "value": "[guid(subscription().subscriptionId)]",
             "type": "string"
         },
-        "uniqueStringPerResourceGroup": {
+        "guidPerResourceGroup": {
             "value": "[guid(resourceGroup().id)]",
             "type": "string"
         },
-        "uniqueStringPerDeployment": {
+        "guidPerDeployment": {
 			"value": "[guid(resourceGroup().id, deployment().name)]",
 			"type" : "string"
 		}
