@@ -9,10 +9,6 @@
             "type": "string"
         }
     },
-    "variables": {
-        "contributorRoleDefinitionId": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
-        "roleAssignmentId": "[guid(resourceId('Microsoft.Compute/virtualMachines/', parameters('vmName')))]"
-    },
     "resources": [
         {
             "apiVersion": "2017-03-30",
