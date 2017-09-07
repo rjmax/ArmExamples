@@ -23,7 +23,7 @@
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "name": "[concat(parameters('vmName'),'/ManagedIdentityExtensionForLinux')]",
             "apiVersion": "2016-03-30",
-            "location": "[resourceGroup().location]",
+            "location": "[parameters('location')]",
             "dependsOn": [
                 "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'))]"
             ],
