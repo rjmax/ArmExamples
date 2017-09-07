@@ -2,23 +2,27 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "roleDefinitionId": {
-      "type": "string"
+    "roleDefinitionGuid": {
+      "type": "string",
+      "defaultValue": "/subscriptions/9167af2d-c13e-4d34-9a57-8f37dba6ff31/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
     },
     "principalId": {
       "type": "string"
     },
-    "rbacResource": {
+    "storageAccountName": {
       "type": "string"
     }
   },
+  "variables": {
+    "roleDefinitionId":"[concat(subscription().id,'/providers/Microsoft.Authorization/roleDefinitions/',parameters('roleDefinitionGuid'))]"
+  },
   "resources": [
     {
-      "name": "[concat(parameters('rbacResource'), '/Microsoft.Authorization/', parameters('principalId'))]",
+      "name": "[concat(parameters('storageAccountName'), '/Microsoft.Authorization/', parameters('principalId'))]",
       "type": "Microsoft.Storage/storageAccounts/providers/roleAssignments",
-      "apiVersion": "2014-10-01-preview",
+      "apiVersion": "2015-07-01",
       "properties": {
-	         "roleDefinitionId": "[parameters('roleDefinitionId')]",
+	         "roleDefinitionId": "[variables('roleDefinitionId')]",
 	         "principalId": "[parameters('principalId')]"
       }
     }
