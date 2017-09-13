@@ -4,7 +4,7 @@
   "parameters": {
     "roleDefinitionGuid": {
       "type": "string",
-      "defaultValue": "/subscriptions/9167af2d-c13e-4d34-9a57-8f37dba6ff31/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+      "defaultValue": "b24988ac-6180-42a0-ab88-20f7382dd24c"
     },
     "principalId": {
       "type": "string"
