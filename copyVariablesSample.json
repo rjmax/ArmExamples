@@ -1,0 +1,41 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {},
+    "variables": {
+        "foo": {
+            "copy": [
+                {
+                    "name": "myArray",
+                    "count": 2,
+                    "input": {
+						"key1":"value1",
+						"key2":"value2"
+                    }
+                }
+            ]
+        },
+        "copy": [
+            {
+                "name": "bar",
+                "count": 2,
+				"input": {
+					"key1":"value1",
+					"key2":"value2"
+				}
+            }
+        ]
+    },
+
+	"resources": [],
+	"outputs": {
+		"exampleOutputFoo": {
+			"value": "[variables('foo')]",
+			"type" : "object"
+		},
+		"exampleOutputBar": {
+			"value": "[variables('bar')]",
+			"type" : "array"
+		},
+	}
+}
